@@ -57,6 +57,9 @@ update-java-alternatives -s java-6-sun
 # Configure sudoers, allow admin group
 perl -pi -e 's|#\s*%admin|%admin|' /etc/sudoers
 
+# Default base directory for development projects/checkouts
+mkdir ~/Development
+
 # Refresh filesys, cleanup etc
 updatedb
 
