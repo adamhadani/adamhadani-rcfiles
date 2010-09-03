@@ -34,13 +34,14 @@ apt-get upgrade
 apt-get --quiet --yes install vim man tree rsync \
         htop lshw sysstat ntp \
 				screen revelation \
+   			libpq-dev postgresql-client \
         iproute traceroute libevent-dev \
         supervisor
 
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
 
-# Setup Java
+# Setup Java (Sun JVM)
 if [ "$release_codename" = "lucid" ];
 then
     # For Ubuntu 10.04, Need to enable partner repository
