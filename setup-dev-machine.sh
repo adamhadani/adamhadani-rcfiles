@@ -33,7 +33,7 @@ apt-get upgrade
 # Install some common used packages
 apt-get --quiet --yes install vim man tree rsync \
         htop lshw sysstat ntp \
-				screen \
+				screen revelation \
         iproute traceroute libevent-dev \
         supervisor
 
@@ -61,3 +61,4 @@ perl -pi -e 's|#\s*%admin|%admin|' /etc/sudoers
 updatedb
 
 log "All done."
+
