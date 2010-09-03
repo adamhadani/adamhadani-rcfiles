@@ -1,2 +1,24 @@
+# .screenrc
+# set some defaults for GNC Screen
+#
+# adamhadani's settings
+
+# bind F11/F12 Keys for Previous/Next scrolling
+bindkey -k F1 prev
+bindkey -k F2 next
+
+startup_message off
+defscrollback 99999
+
+# Turn off the visual bell
+vbell off
+# Look and feel
+#caption always "%{= bb}%{+b w}%n %h %=%t %c"
 hardstatus alwayslastline
-hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+# Setup default screens
+screen -t sHell-i 0
+screen -t sHell-ii 1
+screen -t sHell-iii 2
+screen -t sHell-iv 3
+ 
