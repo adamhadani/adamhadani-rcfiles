@@ -42,7 +42,7 @@ apt-get --quiet --yes install vim man tree rsync \
 apt-get --quiet --yes install subversion git-core
 
 # Web development environment - Apache / PHP etc.
-apt-get --quiet --yes install apache2 php5
+apt-get --quiet --yes install apache2 php5 php5-cli
 
 # Setup Java (Sun JVM)
 if [ "$release_codename" = "lucid" ];
