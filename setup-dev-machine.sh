@@ -54,6 +54,9 @@ fi
 apt-get --quiet --yes install sun-java6-jdk &&
 update-java-alternatives -s java-6-sun
 
+# Setup Eclipse IDE
+apt-get --quiet --yes --no-install-recommends install eclipse
+
 # Configure sudoers, allow admin group
 perl -pi -e 's|#\s*%admin|%admin|' /etc/sudoers
 
