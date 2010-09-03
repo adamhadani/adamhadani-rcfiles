@@ -30,7 +30,7 @@ release_codename=`lsb_release -sc`
 apt-get update &&
 apt-get upgrade
 
-# Install some common used packages
+# Install some commonly used system tools / packages
 apt-get --quiet --yes install vim man tree rsync \
         htop lshw sysstat ntp \
 				screen revelation \
@@ -56,6 +56,10 @@ update-java-alternatives -s java-6-sun
 
 # Setup Eclipse IDE
 apt-get --quiet --yes --no-install-recommends install eclipse
+
+# Setup various python packages and their dependencies
+apt-get --quiet --yes ipython python-setuptools python-virtualenv \
+				python-numpy python-scipy python-matplotlib
 
 # Configure sudoers, allow admin group
 perl -pi -e 's|#\s*%admin|%admin|' /etc/sudoers
