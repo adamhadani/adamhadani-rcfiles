@@ -38,6 +38,9 @@ apt-get --quiet --yes install vim man tree rsync \
         iproute traceroute libevent-dev \
         supervisor
 
+# No dev machine is complete without VLC player :)
+apt-get --quiet --yes install vlc
+
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
 
