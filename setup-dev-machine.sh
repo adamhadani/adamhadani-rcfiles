@@ -32,7 +32,7 @@ apt-get upgrade
 
 # Install some commonly used system tools / packages
 apt-get --quiet --yes install vim man tree rsync \
-        htop lshw sysstat ntp \
+        htop lshw sysstat ntp unrar \
 				screen revelation \
    			libpq-dev postgresql-client \
         iproute traceroute libevent-dev \
