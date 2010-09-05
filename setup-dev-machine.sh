@@ -31,21 +31,21 @@ apt-get update &&
 apt-get upgrade
 
 # Install some commonly used system tools / packages
-apt-get --quiet --yes install vim man tree rsync \
+apt-get --quiet --yes install vim man tree rsync autossh \
         htop lshw sysstat ntp unrar \
 				screen revelation \
    			libpq-dev postgresql-client \
         iproute traceroute libevent-dev \
         supervisor
 
-# No dev machine is complete without VLC player :)
-apt-get --quiet --yes install vlc
-
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
 
-# Web development environment - Apache / PHP etc.
-apt-get --quiet --yes install apache2 php5 php5-cli
+# Web development environment - Apache / PHP / MySQL5 Server / memcached
+apt-get --quiet --yes install apache2 php5 php5-cli memcached
+
+# No dev machine is complete without VLC player :)
+apt-get --quiet --yes install vlc
 
 # Setup Java (Sun JVM)
 if [ "$release_codename" = "lucid" ];
@@ -61,12 +61,16 @@ fi
 apt-get --quiet --yes install sun-java6-jdk &&
 update-java-alternatives -s java-6-sun
 
+# Tomcat 6 (After set default Java)
+apt-get --quiet --yes install tomcat6
+
 # Setup Eclipse IDE
 apt-get --quiet --yes --no-install-recommends install eclipse
 
 # Setup various python packages and their dependencies
-apt-get --quiet --yes ipython python-setuptools python-virtualenv \
-				python-numpy python-scipy python-matplotlib
+apt-get --quiet --yes ipython python-setuptools python-nose python-virtualenv \
+				python-numpy python-scipy python-matplotlib \
+				python-boto
 
 # Configure sudoers, allow admin group
 perl -pi -e 's|#\s*%admin|%admin|' /etc/sudoers
