@@ -34,15 +34,15 @@ apt-get upgrade
 apt-get --quiet --yes install vim man tree rsync autossh \
         htop lshw sysstat ntp unrar \
 				screen revelation \
-   			libpq-dev postgresql-client \
+   			libpq-dev postgresql-client libmysqlclient-dev \
         iproute traceroute libevent-dev \
-        supervisor
+        supervisor geoip-bin
 
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
 
 # Web development environment - Apache / PHP / MySQL5 Server / memcached
-apt-get --quiet --yes install apache2 php5 php5-cli memcached
+apt-get --quiet --yes install apache2 php5 php5-cli memcached mysql-server
 
 # No dev machine is complete without VLC player :)
 apt-get --quiet --yes install vlc
@@ -68,6 +68,7 @@ apt-get --quiet --yes install tomcat6
 apt-get --quiet --yes --no-install-recommends install eclipse
 
 # Setup various python packages and their dependencies
+apt-get --quiet --yes libpng-dev libfreetype6-dev gfortran
 apt-get --quiet --yes ipython python-setuptools python-nose python-virtualenv \
 				python-numpy python-scipy python-matplotlib \
 				python-boto
