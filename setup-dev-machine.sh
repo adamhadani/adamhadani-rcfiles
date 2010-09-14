@@ -31,7 +31,7 @@ apt-get update &&
 apt-get upgrade
 
 # Install some commonly used system tools / packages
-apt-get --quiet --yes install vim man tree rsync autossh \
+apt-get --quiet --yes install vim bc man tree rsync autossh \
         htop lshw sysstat ntp unrar \
 				screen revelation \
    			libpq-dev postgresql-client libmysqlclient-dev \
