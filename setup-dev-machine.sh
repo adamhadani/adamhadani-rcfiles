@@ -61,6 +61,9 @@ fi
 apt-get --quiet --yes install sun-java6-jdk &&
 update-java-alternatives -s java-6-sun
 
+# Apache Ivy - Java Dependency manager
+apt-get --quiet --yes install ivy
+
 # Tomcat 6 (After set default Java)
 apt-get --quiet --yes install tomcat6
 
