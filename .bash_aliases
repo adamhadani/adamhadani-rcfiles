@@ -2,5 +2,5 @@
 # adamhadani's console aliases / definitions
 #
 
-alias mod="if [ -e '.git' ]; then git status; else svn stat; fi"
+alias mod="if [ -e '.svn' ]; then svn stat; else git status; fi"
 
