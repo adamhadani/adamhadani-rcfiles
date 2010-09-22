@@ -43,7 +43,7 @@ apt-get --quiet --yes install subversion git-core
 
 # Web development environment - Apache / PHP / MySQL5 Server / memcached
 apt-get --quiet --yes install apache2 php5 php5-cli \
-		php5-curl pear \
+		php5-curl php-pear \
 		memcached mysql-server
 
 # No dev machine is complete without VLC player :)
