@@ -36,13 +36,15 @@ apt-get --quiet --yes install vim bc man tree rsync autossh \
 				screen revelation \
    			libpq-dev postgresql-client libmysqlclient-dev \
         iproute traceroute libevent-dev \
-        supervisor geoip-bin
+        supervisor geoip-bin imagemagick
 
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
 
 # Web development environment - Apache / PHP / MySQL5 Server / memcached
-apt-get --quiet --yes install apache2 php5 php5-cli memcached mysql-server
+apt-get --quiet --yes install apache2 php5 php5-cli \
+		php5-curl pear \
+		memcached mysql-server
 
 # No dev machine is complete without VLC player :)
 apt-get --quiet --yes install vlc
