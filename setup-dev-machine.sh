@@ -35,7 +35,7 @@ apt-get --quiet --yes install vim bc man tree rsync autossh \
         htop iftop lshw sysstat ntp sudo liblzo2-dev unrar \
 		screen revelation \
    		libpq-dev postgresql-client libmysqlclient-dev \
-        iproute traceroute libevent-dev \
+        iproute traceroute libevent-dev libyaml-dev \
         supervisor geoip-bin imagemagick
 
 # Source control - SVN / Git
