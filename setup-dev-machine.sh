@@ -34,9 +34,10 @@ apt-get upgrade
 apt-get --quiet --yes install vim bc man tree rsync autossh \
         htop iftop lshw sysstat ntp sudo liblzo2-dev unrar \
 		screen revelation \
-   		libpq-dev postgresql-client libmysqlclient-dev \
+   		libpq-dev postgresql-client libmysqlclient-dev sqlitebrowser \
         iproute traceroute libevent-dev libyaml-dev \
-        supervisor geoip-bin imagemagick
+        supervisor imagemagick \
+        libgeoip-dev geoip-bin python-dev gcc
 
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
