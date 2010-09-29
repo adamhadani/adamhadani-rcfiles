@@ -51,7 +51,7 @@ cleanup() {
 }
 
 rexec() {
-    ssh -p $SSH_PORT $SSH_OPTS $SSH_USERHOST "$*"
+    ssh -c arcfour -p $SSH_PORT $SSH_OPTS $SSH_USERHOST "$*"
 }
 
 pull() {
