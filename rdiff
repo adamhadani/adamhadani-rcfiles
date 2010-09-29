@@ -15,17 +15,17 @@
 # Method definitions
     
 log() {
-    echo "`date +%c` - $*"
+    printf "$*\n" >&2
 }
 
 error() {
-    printf "`date +%c` - $*\n" >&2
+    printf "ERROR: $*\n" >&2
     exit -1
 }
 
 usage() {
 tee >&2 <<EOF
-USAGE: $(basename $0) [-r recursive] [-p ssh_port] [-s ssh_opts] [-o diff_opts] <local_file_or_dir> <remote_file_or_dir>
+USAGE: $(basename $0) [-h help] [-r recursive] [-p ssh_port] [-s ssh_opts] [-o diff_opts] <local_file_or_dir> <remote_file_or_dir>
 EOF
 }
 
@@ -67,7 +67,7 @@ REMOTEPATH=
 TMP_FNAME=
 DIFF_OPTS=
 SSH_OPTS=
-SSH_PORT=
+SSH_PORT=22
 SSH_USERHOST=
 
 VERSION=0.1
@@ -110,6 +110,11 @@ SSH_USERHOST=${REMOTEPATH%%:*}
 if [ -z "$RECURSIVE" ];
 then
     # Non-recursive diff
+    if [ -d "$LOCALPATH" ];
+    then
+        error "Use '$(basename $0) -r' to diff directories."
+    fi
+
     log "Diffing with remote file ${REMOTEPATH}..."
     rexec "cat ${REMOTEPATH##*@*:} | gzip -cf" | gzip -d | diff $DIFF_OPTS - $LOCALPATH
 else
