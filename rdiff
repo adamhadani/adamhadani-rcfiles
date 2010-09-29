@@ -1,0 +1,114 @@
+#!/bin/bash
+#
+# rdiff - A Simple remote diff utility.
+#
+# Supports diffing files as well as directories.
+#
+# Author: Adam Ever-Hadani <adamhadani@videosurf.com>
+#
+# Last changes:
+#
+#
+#
+##############################################################################
+
+# Method definitions
+    
+log() {
+    echo "`date +%c` - $*"
+}
+
+error() {
+    printf "`date +%c` - $*\n" >&2
+    exit -1
+}
+
+usage() {
+    printf "Usage: $(basename $0) [-r recursive] [-p ssh_port] [-o diff_opts]  <local_file_or_dir> <remote_file_or_dir>\n" >&2
+    exit 1
+}
+
+cleanup() {
+    rm -f $PID_FILE
+    rm -f $CAT_FILE
+    rm -rf ${TMP_DIR}
+}
+
+rexec() {
+    ssh -p $SSH_PORT $SSH_USERHOST "$*"
+}
+
+pull() {
+    scp -c arcfour -P $SSH_PORT $SSH_USERHOST:$1 $2 >/dev/null
+}
+
+##############################################################################
+
+# Define variables used in script
+RECURSIVE=
+LOCALPATH=
+REMOTEPATH=
+TMP_FNAME=
+DIFF_OPTS=
+SSH_PORT=22
+SSH_USERHOST=
+
+# Process command-line options
+
+while getopts rp:o: OPT
+do
+    case $OPT in
+    r)  RECURSIVE=1
+        ;;
+    p)  SSH_PORT="$OPTARG"
+        ;;
+    o)  DIFF_OPTS="$OPTARG"
+        ;;
+    *)  usage
+        ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -lt 2 ];
+then
+    usage
+fi
+
+LOCALPATH=$1
+REMOTEPATH=$2
+SSH_USERHOST=${REMOTEPATH%%:*}
+
+##############################################################################
+
+if [ -z "$RECURSIVE" ];
+then
+    # Non-recursive diff
+    log "Diffing with remote file ${REMOTEPATH}..."
+    rexec "cat ${REMOTEPATH##*@*:}" | diff $DIFF_OPTS - $LOCALPATH
+else
+    # Recursive (directory-to-directory) diff
+
+    if [ ! -d "$LOCALPATH" ];
+    then
+        error "Not a directory: ${LOCALPATH}"
+    fi
+
+   TMP_FNAME="rdiff.${RANDOM}.tgz"
+   TMP_DIR=/tmp/rdiff.${RANDOM}
+   mkdir -p $TMP_DIR
+
+   log "Compressing remote directory"
+   rexec "tar czf /tmp/${TMP_FNAME} ${REMOTEPATH##*@*:}"
+   log "Fetching compressed remote directory"
+   pull /tmp/$TMP_FNAME /tmp
+   log "Decompressing remote directory"
+   tar xzf /tmp/$TMP_FNAME -C ${TMP_DIR}
+
+   diff $LOCALPATH $TMP_DIR/${REMOTEPATH##*@*:}
+fi
+
+##############################################################################
+
+cleanup
+
