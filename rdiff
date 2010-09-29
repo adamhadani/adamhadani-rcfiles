@@ -25,23 +25,31 @@ error() {
 
 usage() {
 tee >&2 <<EOF
-USAGE: $(basename $0) [-r recursive] [-p ssh_port] [-o diff_opts] <local_file_or_dir> <remote_file_or_dir>
+USAGE: $(basename $0) [-r recursive] [-p ssh_port] [-s ssh_opts] [-o diff_opts] <local_file_or_dir> <remote_file_or_dir>
 EOF
-    exit 1
+}
+
+help() {
+    usage
+tee >&2 <<EOF
+    -r  Run recursively (use when comparing directories)
+    -p  Port used by ssh/scp. Default is 22
+    -o  diff Command options. These get passed to diff
+    -s  ssh Command options. These get passed to ssh/scp (in addition to port)
+EOF
 }
 
 cleanup() {
-    rm -f $PID_FILE
-    rm -f $CAT_FILE
-    rm -rf ${TMP_DIR}
+    rm /tmp/$TMP_FNAME
+    rm -rf /tmp/$TMP_DIR
 }
 
 rexec() {
-    ssh -p $SSH_PORT $SSH_USERHOST "$*"
+    ssh -p $SSH_PORT $SSH_OPTS $SSH_USERHOST "$*"
 }
 
 pull() {
-    scp -c arcfour -P $SSH_PORT $SSH_USERHOST:$1 $2 >/dev/null
+    rsync --copy-links -avze "ssh -c arcfour -p $SSH_PORT $SSH_OPTS" $SSH_USERHOST:$1 $2 >/dev/null
 }
 
 ##############################################################################
@@ -52,23 +60,30 @@ LOCALPATH=
 REMOTEPATH=
 TMP_FNAME=
 DIFF_OPTS=
-SSH_PORT=22
+SSH_OPTS=
+SSH_PORT=
 SSH_USERHOST=
 
 VERSION=0.1
 
 # Process command-line options
 
-while getopts rp:o: OPT
+while getopts hrp:o:s: OPT
 do
     case $OPT in
     r)  RECURSIVE=1
         ;;
     p)  SSH_PORT="$OPTARG"
         ;;
+    s)  SSH_OPTS="$OPTARG"
+        ;;
     o)  DIFF_OPTS="$OPTARG"
         ;;
+    h)  help
+        exit 1
+        ;;
     *)  usage
+        exit 1
         ;;
     esac
 done
@@ -103,13 +118,13 @@ else
    mkdir -p $TMP_DIR
 
    log "Compressing remote directory"
-   rexec "tar czf /tmp/${TMP_FNAME} ${REMOTEPATH##*@*:}"
+   rexec "tar hczf /tmp/${TMP_FNAME} ${REMOTEPATH##*@*:}"
    log "Fetching compressed remote directory"
    pull /tmp/$TMP_FNAME /tmp
    log "Decompressing remote directory"
    tar xzf /tmp/$TMP_FNAME -C ${TMP_DIR}
    log "Diffing with remote directory ${REMOTEPATH##*@*:}"
-   diff $LOCALPATH $TMP_DIR/${REMOTEPATH##*@*:}
+   diff $DIFF_OPTS $LOCALPATH $TMP_DIR/${REMOTEPATH##*@*:}
 fi
 
 ##############################################################################
