@@ -24,7 +24,9 @@ error() {
 }
 
 usage() {
-    printf "Usage: $(basename $0) [-r recursive] [-p ssh_port] [-o diff_opts]  <local_file_or_dir> <remote_file_or_dir>\n" >&2
+tee >&2 <<EOF
+USAGE: $(basename $0) [-r recursive] [-p ssh_port] [-o diff_opts] <local_file_or_dir> <remote_file_or_dir>
+EOF
     exit 1
 }
 
@@ -52,6 +54,8 @@ TMP_FNAME=
 DIFF_OPTS=
 SSH_PORT=22
 SSH_USERHOST=
+
+VERSION=0.1
 
 # Process command-line options
 
