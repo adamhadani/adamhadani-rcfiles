@@ -40,8 +40,14 @@ EOF
 }
 
 cleanup() {
-    rm /tmp/$TMP_FNAME
-    rm -rf /tmp/$TMP_DIR
+    if [ -n "$TMP_FNAME" ];
+    then
+        rm /tmp/$TMP_FNAME
+    fi
+    if [ -n "$TMP_DIR" ] && [ -d "$TMP_DIR" ];
+    then
+        rm -rf /tmp/$TMP_DIR
+    fi
 }
 
 rexec() {
@@ -92,6 +98,7 @@ shift $((OPTIND - 1))
 if [ "$#" -lt 2 ];
 then
     usage
+    exit 1
 fi
 
 LOCALPATH=$1
@@ -104,10 +111,9 @@ if [ -z "$RECURSIVE" ];
 then
     # Non-recursive diff
     log "Diffing with remote file ${REMOTEPATH}..."
-    rexec "cat ${REMOTEPATH##*@*:}" | diff $DIFF_OPTS - $LOCALPATH
+    rexec "cat ${REMOTEPATH##*@*:} | gzip -cf" | gzip -d | diff $DIFF_OPTS - $LOCALPATH
 else
     # Recursive (directory-to-directory) diff
-
     if [ ! -d "$LOCALPATH" ];
     then
         error "Not a directory: ${LOCALPATH}"
