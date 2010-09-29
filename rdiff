@@ -132,6 +132,10 @@ else
    rexec "tar hczf /tmp/${TMP_FNAME} ${REMOTEPATH##*@*:}"
    log "Fetching compressed remote directory"
    pull /tmp/$TMP_FNAME /tmp
+
+   #Remove the temporary remote file
+   rexec "nohup rm /tmp/${TMP_FNAME} 2>&1 &"
+
    log "Decompressing remote directory"
    tar xzf /tmp/$TMP_FNAME -C ${TMP_DIR}
    log "Diffing with remote directory ${REMOTEPATH##*@*:}"
