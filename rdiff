@@ -104,7 +104,7 @@ else
    pull /tmp/$TMP_FNAME /tmp
    log "Decompressing remote directory"
    tar xzf /tmp/$TMP_FNAME -C ${TMP_DIR}
-
+   log "Diffing with remote directory ${REMOTEPATH##*@*:}"
    diff $LOCALPATH $TMP_DIR/${REMOTEPATH##*@*:}
 fi
 
