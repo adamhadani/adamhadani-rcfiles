@@ -33,17 +33,18 @@ apt-get upgrade
 # Install some commonly used system tools / packages
 apt-get --quiet --yes install vim bc man tree rsync autossh \
         htop iftop lshw sysstat ntp sudo liblzo2-dev unrar \
-				screen revelation \
-   			libpq-dev postgresql-client libmysqlclient-dev \
-        iproute traceroute libevent-dev \
-        supervisor geoip-bin imagemagick
+		screen revelation \
+   		libpq-dev postgresql-client libmysqlclient-dev sqlitebrowser \
+        iproute traceroute libevent-dev libyaml-dev \
+        supervisor imagemagick \
+        libgeoip-dev geoip-bin python-dev gcc
 
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
 
 # Web development environment - Apache / PHP / MySQL5 Server / memcached
 apt-get --quiet --yes install apache2 php5 php5-cli \
-		php5-curl php-pear \
+		php5-curl php-pear phpunit \
 		memcached mysql-server
 
 # No dev machine is complete without VLC player :)
@@ -62,6 +63,9 @@ fi
 
 apt-get --quiet --yes install sun-java6-jdk &&
 update-java-alternatives -s java-6-sun
+
+# Apache Ivy - Java Dependency manager
+apt-get --quiet --yes install ivy
 
 # Tomcat 6 (After set default Java)
 apt-get --quiet --yes install tomcat6

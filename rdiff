@@ -1,0 +1,148 @@
+#!/bin/bash
+#
+# rdiff - A Simple remote diff utility.
+#
+# Supports diffing files as well as directories.
+#
+# Author: Adam Ever-Hadani <adamhadani@videosurf.com>
+#
+# Last changes:
+#
+#
+#
+##############################################################################
+
+# Method definitions
+    
+log() {
+    printf "$*\n" >&2
+}
+
+error() {
+    printf "ERROR: $*\n" >&2
+    exit -1
+}
+
+usage() {
+tee >&2 <<EOF
+USAGE: $(basename $0) [-h help] [-r recursive] [-p ssh_port] [-s ssh_opts] [-o diff_opts] <local_file_or_dir> <remote_file_or_dir>
+EOF
+}
+
+help() {
+    usage
+tee >&2 <<EOF
+    -r  Run recursively (use when comparing directories)
+    -p  Port used by ssh/scp. Default is 22
+    -o  diff Command options. These get passed to diff
+    -s  ssh Command options. These get passed to ssh/scp (in addition to port)
+EOF
+}
+
+cleanup() {
+    if [ -n "$TMP_FNAME" ];
+    then
+        rm /tmp/$TMP_FNAME
+    fi
+    if [ -n "$TMP_DIR" ] && [ -d "$TMP_DIR" ];
+    then
+        rm -rf /tmp/$TMP_DIR
+    fi
+}
+
+rexec() {
+    ssh -c arcfour -p $SSH_PORT $SSH_OPTS $SSH_USERHOST "$*"
+}
+
+pull() {
+    rsync --copy-links -avze "ssh -c arcfour -p $SSH_PORT $SSH_OPTS" $SSH_USERHOST:$1 $2 >/dev/null
+}
+
+##############################################################################
+
+# Define variables used in script
+RECURSIVE=
+LOCALPATH=
+REMOTEPATH=
+TMP_FNAME=
+DIFF_OPTS="-s"
+SSH_OPTS=
+SSH_PORT=22
+SSH_USERHOST=
+
+VERSION=0.1
+
+# Process command-line options
+
+while getopts hrp:o:s: OPT
+do
+    case $OPT in
+    r)  RECURSIVE=1
+        ;;
+    p)  SSH_PORT="$OPTARG"
+        ;;
+    s)  SSH_OPTS="$OPTARG"
+        ;;
+    o)  DIFF_OPTS="$OPTARG"
+        ;;
+    h)  help
+        exit 1
+        ;;
+    *)  usage
+        exit 1
+        ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -lt 2 ];
+then
+    usage
+    exit 1
+fi
+
+LOCALPATH=$1
+REMOTEPATH=$2
+SSH_USERHOST=${REMOTEPATH%%:*}
+
+##############################################################################
+
+if [ -z "$RECURSIVE" ];
+then
+    # Non-recursive diff
+    if [ -d "$LOCALPATH" ];
+    then
+        error "Use '$(basename $0) -r' to diff directories."
+    fi
+
+    log "Diffing with remote file ${REMOTEPATH}..."
+    rexec "cat ${REMOTEPATH##*@*:} | gzip -cf" | gzip -d | diff $DIFF_OPTS - $LOCALPATH
+else
+    # Recursive (directory-to-directory) diff
+    if [ ! -d "$LOCALPATH" ];
+    then
+        error "Not a directory: ${LOCALPATH}"
+    fi
+
+   TMP_FNAME="rdiff.${RANDOM}.tgz"
+   TMP_DIR=/tmp/rdiff.${RANDOM}
+   mkdir -p $TMP_DIR
+
+   log "Compressing remote directory"
+   rexec "tar hczf /tmp/${TMP_FNAME} ${REMOTEPATH##*@*:}"
+   log "Fetching compressed remote directory"
+   pull /tmp/$TMP_FNAME /tmp
+
+   #Remove the temporary remote file
+   rexec "nohup rm /tmp/${TMP_FNAME} 2>&1 &"
+
+   log "Decompressing remote directory"
+   tar xzf /tmp/$TMP_FNAME -C ${TMP_DIR}
+   log "Diffing with remote directory ${REMOTEPATH##*@*:}"
+   diff $DIFF_OPTS $LOCALPATH $TMP_DIR/${REMOTEPATH##*@*:}
+fi
+
+##############################################################################
+
+cleanup
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Shortcut for finding references in python codebase
+#
+
+if [ "$#" -lt 1 ];
+then
+	printf "USAGE: $(basename $0) <string>\n" >&2
+	exit 1
+fi
+
+find . -name '*.py' -exec grep --color "${1}" '{}' \; -print
