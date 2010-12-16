@@ -115,7 +115,7 @@ then
         error "Use '$(basename $0) -r' to diff directories."
     fi
 
-    log "Diffing with remote file ${REMOTEPATH}..."
+    log "Diffing with remote file ${REMOTEPATH}"
     rexec "cat ${REMOTEPATH##*@*:} | gzip -cf" | gzip -d | diff $DIFF_OPTS - $LOCALPATH
 else
     # Recursive (directory-to-directory) diff
