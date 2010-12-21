@@ -51,11 +51,11 @@ cleanup() {
 }
 
 rexec() {
-    ssh -c arcfour -p $SSH_PORT $SSH_OPTS $SSH_USERHOST "$*"
+    ssh -c arcfour $SSH_PORT $SSH_OPTS $SSH_USERHOST "$*"
 }
 
 pull() {
-    rsync --copy-links -avze "ssh -c arcfour -p $SSH_PORT $SSH_OPTS" $SSH_USERHOST:$1 $2 >/dev/null
+    rsync --copy-links -avze "ssh -c arcfour $SSH_PORT $SSH_OPTS" $SSH_USERHOST:$1 $2 >/dev/null
 }
 
 ##############################################################################
@@ -67,7 +67,7 @@ REMOTEPATH=
 TMP_FNAME=
 DIFF_OPTS="-s"
 SSH_OPTS=
-SSH_PORT=22
+SSH_PORT=
 SSH_USERHOST=
 
 VERSION=0.1
@@ -79,7 +79,7 @@ do
     case $OPT in
     r)  RECURSIVE=1
         ;;
-    p)  SSH_PORT="$OPTARG"
+    p)  SSH_PORT="-p $OPTARG"
         ;;
     s)  SSH_OPTS="$OPTARG"
         ;;
@@ -113,10 +113,18 @@ then
     if [ -d "$LOCALPATH" ];
     then
         error "Use '$(basename $0) -r' to diff directories."
+    elif [ ! -f "$LOCALPATH" ];
+    then
+        error "Local file '$LOCALPATH' does not exist."
     fi
 
     log "Diffing with remote file ${REMOTEPATH}"
+    rexec "test -f ${REMOTEPATH##*@*:}" || {
+        error "Could not access remote file '${REMOTEPATH##*@*:}'"
+    }
+
     rexec "cat ${REMOTEPATH##*@*:} | gzip -cf" | gzip -d | diff $DIFF_OPTS - $LOCALPATH
+
 else
     # Recursive (directory-to-directory) diff
     if [ ! -d "$LOCALPATH" ];
