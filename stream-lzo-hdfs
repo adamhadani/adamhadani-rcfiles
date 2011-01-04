@@ -58,3 +58,4 @@ log "Indexing Compressed LZO file"
 $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/lib/hadoop-lzo-0.4.4.jar \
 	com.hadoop.compression.lzo.DistributedLzoIndexer \
 	$HDFS_PATH  
+
