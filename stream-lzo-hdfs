@@ -1,8 +1,11 @@
 #!/bin/bash
 #
-# Stream an input into HDFS, compressing it with LZO on the fly and creating
+# Stream input from stdin into HDFS, compressing it with LZO on the fly and creating
 # the LZO index on HDFS.
 #
+# Requires the hadoop LZO compression library / JAR files, see:
+#  http://code.google.com/p/hadoop-gpl-compression/wiki/FAQ
+#  https://github.com/kevinweil/hadoop-lzo
 #
 ###############################################################################
 
