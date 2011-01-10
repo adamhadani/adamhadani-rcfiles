@@ -24,7 +24,7 @@ error() {
     exit 1
 }
 cleanup() {
-    rm $PID_FILE
+    rm -f $PID_FILE
 }
 
 if [ "$#" -lt 1 ];
