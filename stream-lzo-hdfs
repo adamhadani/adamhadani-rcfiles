@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Stream input from stdin into HDFS, compressing it with LZO on the fly and creating
+# the LZO index on HDFS.
+#
+# Requires the hadoop LZO compression library / JAR files, see:
+#  http://code.google.com/p/hadoop-gpl-compression/wiki/FAQ
+#  https://github.com/kevinweil/hadoop-lzo
+#
+###############################################################################
+
+PID_FILE=~/tmp/$(basename $0).lock
+FNAME=
+
+usage() {
+    printf "Usage: $(basename $0) <hdfs_file_name>\n" >&2
+    exit -1
+}
+log() {
+    echo "`date +%c` - $*"
+}
+error() {
+    printf "`date +%c` - ERROR: $*\n" >&2
+    exit 1
+}
+cleanup() {
+    rm -f $PID_FILE
+}
+
+if [ "$#" -lt 1 ];
+then
+    usage
+fi
+
+FNAME=$1
+
+if [ -z "$HADOOP_HOME" ];
+then
+    error "HADOOP_HOME is not set."
+fi
+
+if [ -e "$PID_FILE" ] && [ -e /proc/`cat $PID_FILE` ];
+then
+    error "PID_FILE Already exists and process is running (PID: `cat $PID_FILE`). Exitting."
+fi
+
+trap "cleanup; exit" SIGINT SIGTERM EXIT
+echo $$ > $PID_FILE
+
+
+# Upload to HDFS
+HDFS_PATH="/user/${USER}/${FNAME}.lzo"
+log "Streaming to HDFS Path: $HDFS_PATH"
+cat | \
+    lzop --stdout - | \
+    $HADOOP_HOME/bin/hadoop fs -copyFromLocal - $HDFS_PATH || {
+    error "Error while uploading file to HDFS, Aborting."
+}
+
+log "Indexing Compressed LZO file"
+$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/lib/hadoop-lzo-0.4.4.jar \
+	com.hadoop.compression.lzo.DistributedLzoIndexer \
+	$HDFS_PATH  
+
