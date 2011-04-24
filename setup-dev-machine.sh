@@ -25,10 +25,13 @@ error() {
 ###############################################################################
 
 release_codename=`lsb_release -sc`
+release_version=`lsb_release -sr`
 
 # Update machine os/packages
 apt-get update &&
-apt-get upgrade
+apt-get upgrade || {
+	error "Could not update system, make sure you're running with sudo."
+}
 
 # Install some commonly used system tools / packages
 apt-get --quiet --yes install vim bc man tree rsync autossh \
@@ -51,7 +54,8 @@ apt-get --quiet --yes install apache2 php5 php5-cli \
 apt-get --quiet --yes install vlc
 
 # Setup Java (Sun JVM)
-if [ "$release_codename" = "lucid" ];
+r=`echo "$release_version >= 10.04" | bc`
+if [ "$r" ];
 then
     # For Ubuntu 10.04, Need to enable partner repository
     # for Sun Java to be available.
@@ -69,6 +73,7 @@ apt-get --quiet --yes install ivy
 
 # Tomcat 6 (After set default Java)
 apt-get --quiet --yes install tomcat6
+/etc/init.d/tomcat6 disable
 
 # Setup Eclipse IDE
 apt-get --quiet --yes --no-install-recommends install eclipse
