@@ -50,6 +50,10 @@ apt-get --quiet --yes install apache2 php5 php5-cli \
 		php5-curl php-pear phpunit \
 		memcached mysql-server
 
+# FirePHP Core library for PHP
+pear channel-discover pear.firephp.org
+pear install firephp/FirePHPCore 
+
 # No dev machine is complete without VLC player :)
 apt-get --quiet --yes install vlc
 
@@ -73,7 +77,8 @@ apt-get --quiet --yes install ivy
 
 # Tomcat 6 (After set default Java)
 apt-get --quiet --yes install tomcat6
-/etc/init.d/tomcat6 disable
+update-rc.d tomcat6 disable
+/etc/init.d/tomcat6 stop
 
 # Setup Eclipse IDE
 apt-get --quiet --yes --no-install-recommends install eclipse
