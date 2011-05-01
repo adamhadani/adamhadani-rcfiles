@@ -47,7 +47,7 @@ apt-get --quiet --yes install subversion git-core
 
 # Web development environment - Apache / PHP / MySQL5 Server / memcached
 apt-get --quiet --yes install apache2 php5 php5-cli \
-		php5-curl php-pear phpunit \
+		php5-curl php5-sqlite php-pear phpunit \
 		memcached mysql-server
 
 # FirePHP Core library for PHP
