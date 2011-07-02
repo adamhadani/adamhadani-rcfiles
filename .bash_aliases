@@ -13,3 +13,5 @@ alias gcm="git commit -a -m"
 alias gpush="git push origin master"
 # Pull master from origin
 alias gpull="git pull origin master"
+
+gcp () { git commit -a -m "$*" && git push origin master; }
