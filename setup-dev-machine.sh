@@ -40,7 +40,8 @@ apt-get --quiet --yes install vim bc man tree rsync autossh \
    		libpq-dev postgresql-client libmysqlclient-dev sqlitebrowser \
         iproute traceroute libevent-dev libyaml-dev \
         supervisor imagemagick \
-        libgeoip-dev geoip-bin python-dev gcc
+        libgeoip-dev geoip-bin python-dev gcc \
+		mysql-query-browser mysql-admin
 
 # Source control - SVN / Git
 apt-get --quiet --yes install subversion git-core
