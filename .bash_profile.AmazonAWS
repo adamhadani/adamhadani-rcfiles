@@ -1,5 +1,8 @@
 
-### Amazon AWS-related settings. Assumes appropriate symlinks for versioned package subdirs
+### Amazon AWS-related settings. 
+### Assumes appropriate symlinks for versioned package subdirs,
+### as well as appropriate credential files in place (can be downloaded from
+### AWS management console)
 
 # Setup Amazon EC2 API CLI
 export EC2_HOME=~/.aws/ec2-api-tools
