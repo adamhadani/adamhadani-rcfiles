@@ -1,0 +1,24 @@
+
+### Amazon AWS-related settings. Assumes appropriate symlinks for versioned package subdirs
+
+# Setup Amazon EC2 API CLI
+export EC2_HOME=~/.aws/ec2-api-tools
+export PATH=$PATH:$EC2_HOME/bin
+
+# Amazon CloudFormation CLI
+export AWS_CLOUDFORMATION_HOME=~/.aws/AWSCloudFormation
+export PATH=$PATH:$AWS_CLOUDFORMATION_HOME/bin
+
+# Amazon RDS CLI
+export AWS_RDS_HOME=~/.aws/RDSCli
+export PATH=$PATH:$AWS_RDS_HOME/bin
+
+# Amazon ElasticLoadBalancing CLI
+export AWS_ELB_HOME=~/.aws/ElasticLoadBalancing
+export PATH=$PATH:$AWS_ELB_HOME/bin
+
+# Amazon AWS Credentials (Used by all Amazon CLI)
+export AWS_CREDENTIAL_FILE=~/.aws/credential-file
+export EC2_PRIVATE_KEY=`ls ~/.aws//pk-*.pem`
+export EC2_CERT=`ls ~/.aws/cert-*.pem`
+
