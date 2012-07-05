@@ -1,0 +1,15 @@
+[user]
+	name = Adam Ever-Hadani
+	email = adamhadani@gmail.com
+[merge]
+	tool = opendiff
+[diff]
+	tool = opendiff
+[alias]
+    ci = commit
+    st = status
+    co = checkout
+    oneline = log --pretty=oneline
+    br = branch
+    la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
+

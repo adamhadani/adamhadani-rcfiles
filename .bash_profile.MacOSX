@@ -1,9 +1,15 @@
 ### OSX-Specific dev machine hacks / aliases / paths
 
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
 # Terminal appearance and coloring
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-export PS1="\u@\h:\w$ "
+
+# Terminal prompt style. Will show active git branch if relevant to working dir
+export PS1="\[\e[33m\]\u\[\e[32;0m\]@\h:\[\e[36;1m\]\w \[\033[31m\]\$(parse_git_branch) \[\e[0;0m\]$ \[\e[0;0m\]"
 
 # Useful aliases / paths commonly used on osx environment
 alias mysql=/usr/local/mysql/bin/mysql
