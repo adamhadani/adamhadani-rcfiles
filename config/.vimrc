@@ -22,4 +22,5 @@ autocmd FileType *.yaml set tabstop=4|set shiftwidth=4|set expandtab
 set nobk
 
 " Paste behavior
+set paste
 set pastetoggle=<F2>
