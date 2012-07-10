@@ -33,13 +33,13 @@ apt-get --quiet --yes upgrade
 apt-get --quiet --yes install vim sudo bc htop iftop lshw sysstat ntp iproute traceroute
 
 
-# CVS Bindings
 apt-get --quiet --yes install git-core
 
 apt-get --quiet --yes install python-virtualenv python-pip python-django
 
 # Apache environment
 apt-get --quiet --yes install apache2 libapache2-mod-wsgi
+apt-get --quiet --yes install apache2 libapache2-mod-wsgi memcached
 
 # Default directories we work with
 mkdir /srv/www
