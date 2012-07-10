@@ -18,7 +18,10 @@ apt-get --quiet --yes upgrade
 # Basic server utilities we want to have for config / monitoring / diagnostics
 apt-get --quiet --yes install vim sudo bc htop iftop lshw sysstat ntp iproute traceroute
 
-# Python/Django deps
+
+# CVS Bindings
+apt-get --quiet --yes install git-core
+
 apt-get --quiet --yes install python-virtualenv python-pip python-django
 
 # Apache environment

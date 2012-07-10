@@ -14,4 +14,5 @@
     la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
 
 [credential]
+    # When running on Mac, use 'osxkeychain'
 	helper = cache
