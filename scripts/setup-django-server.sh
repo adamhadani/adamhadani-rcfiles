@@ -8,8 +8,22 @@
 # Exit on error
 set -e
 
+# Define functions used
+
+error() {
+    printf "ERROR: $*\n" >&2
+    exit 1
+}
+
+
 # Check OS
-os=`lsb_release -a`
+os_distribution=`lsb_release -si`
+os_release=`lsb_release -sr`
+
+if [ "$os_distribution" -ne "Ubuntu" ];
+then
+    error "This script must be run on an Ubuntu linux server"
+fi
 
 # Make sure we're up to date
 apt-get --quiet --yes update
