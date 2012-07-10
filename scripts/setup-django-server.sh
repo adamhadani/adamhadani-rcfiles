@@ -43,7 +43,7 @@ apt-get --quiet --yes install apache2 libapache2-mod-wsgi memcached
 apt-get --quiet --yes install postgresql libpq-dev postgis
 
 # Python environment
-apt-get --quiet --yes install python-virtualenv python-pip python-django
+apt-get --quiet --yes install python-virtualenv python-pip python-django python-dev
 pip install virtualenvwrapper
 
 # Default directories we work with
