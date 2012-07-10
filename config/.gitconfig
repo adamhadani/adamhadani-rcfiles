@@ -13,3 +13,5 @@
     br = branch
     la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
 
+[credential]
+	helper = cache
