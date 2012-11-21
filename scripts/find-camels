@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+while (<>) {
+	while (/\b(([a-z]+)((?:[A-Z]+[a-z]+)+))\b/g) {
+		print "$. : $1\n";
+	} 
+}
