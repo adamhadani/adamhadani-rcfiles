@@ -26,6 +26,11 @@ Feel free to use them for your own purposes.
 
 * **phpref** - Quick function to (recursively) grep .php files
 * **pyref** - Quick function to (recursively) grep .py files
-* **rdiff** - Perform diff on a remote file using scp! see rdiff -h for usage
+
+* **rdiff** - Perform diff on a remote file using scp. see rdiff -h for usage
+
+* **find-camels** - Find lowerCamelCase strings and report them along with line number. 
+* **replace-camels** - Replace all lowerCamelCase with lower_camel_case and emit to STDOUT.
+
 * **stream-lzo-hdfs** - compress a file to .lzo on the fly into HDFS location and perform indexing on it so it is splittable. requires hadoop-lzo-xxx.jar
 * **setup-dev-machine.sh** - Install all packages and setup common defaults for an Ubuntu development machine, the way I use it. See script for details.
