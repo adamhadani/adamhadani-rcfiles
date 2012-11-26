@@ -1,0 +1,41 @@
+#!/bin/bash
+
+MAX_DEPTH=1
+FAIL=0
+
+function log() {
+	printf "$*\n" >&2
+}
+
+
+if [ "$#" -gt 0 ];
+then
+	MAX_DEPTH=$1
+	log "Using recursion MAX_DEPTH = $MAX_DEPTH"
+fi
+
+for d in $(find . -maxdepth $MAX_DEPTH -type d);
+do
+	if [ -e $d/.git ];
+	then
+		log "Pulling on active branch for $d/"
+		pushd $d >/dev/null
+		gpull &
+		popd >/dev/null
+	fi
+done
+
+# Wait for completion
+for job in $(jobs -p);
+do
+	wait $job || let "FAIL+=1"
+done
+
+if [ "$FAIL" == "0" ];
+then
+	# All completed successfully
+	log "All done."
+else
+	log "$FAIL git pulls failed."
+fi
+

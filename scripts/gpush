@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Pull current git branch from origin
+#
+
+function parse_git_branch () {
+       echo `git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+}
+
+branch=`parse_git_branch`
+git push origin $branch

@@ -9,7 +9,7 @@ sub camel2underscore {
 	return lc($out);
 }
 
-while (<STDIN>) {
+while (<>) {
 	$_ =~ s/\b([a-z]+)((?:[A-Z]+[a-z]+)+)\b/$1 . "_" . camel2underscore($2)/eg;
 	print $_;
 }
