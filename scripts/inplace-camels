@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+f=$1
+
+mv $f /var/tmp/
+replace-camels /var/tmp/$(basename $f) > $f
