@@ -23,9 +23,7 @@ Feel free to use them for your own purposes.
 
 ### Scripts [/scripts]
 
-
-* **phpref** - Quick function to (recursively) grep .php files
-* **pyref** - Quick function to (recursively) grep .py files
+* **gpull**, **gpush** - Pull/push from remote git repository on currently active checked-out branch
 
 * **rdiff** - Perform diff on a remote file using scp. see rdiff -h for usage
 
