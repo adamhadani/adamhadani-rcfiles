@@ -5,11 +5,12 @@ use warnings;
 
 sub camel2underscore {
 	my $out = $2;
-	$out =~ s/([A-Z]+[a-z]+)([A-Z]+[a-z]+)/lc($1) . "_" . lc($2)/eg;
+	while ($out =~ s/([a-z]+)([A-Z]+[a-z]+)/lc($1) . "_" . lc($2)/eg) {}
+
 	return lc($out);
 }
 
 while (<>) {
-	$_ =~ s/\b([a-z]+)((?:[A-Z]+[a-z]+)+)\b/$1 . "_" . camel2underscore($2)/eg;
+	$_ =~ s/\b([_][a-z]+)((?:[A-Z]+[a-z]+)+)\b/$1 . "_" . camel2underscore($2)/eg;
 	print $_;
 }
