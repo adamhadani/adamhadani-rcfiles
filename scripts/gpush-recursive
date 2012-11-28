@@ -1,9 +1,10 @@
 #!/bin/bash
-# Recursively push/pull latest changes in parallel on currently  
-# checked out git branch in all sub-directories 
-# of the given directory. 
-# 
-# Requires the gpush / gpull utilities 
+#
+# Recursively push/pull latest changes in parallel on currently 
+# checked out git branch in all sub-directories
+# of the given directory.
+#
+# Requires the gpush / gpull utilities
 #
 #
 MAX_DEPTH=1
@@ -24,9 +25,9 @@ for d in $(find . -maxdepth $MAX_DEPTH -type d);
 do
 	if [ -e $d/.git ];
 	then
-		log "Pulling on active branch for $d/"
+		log "Pushing on active branch for $d/"
 		pushd $d >/dev/null
-		gpull &
+		gpush &
 		popd >/dev/null
 	fi
 done
@@ -42,6 +43,6 @@ then
 	# All completed successfully
 	log "All done."
 else
-	log "$FAIL git pulls failed."
+	log "$FAIL git pushes failed."
 fi
 
