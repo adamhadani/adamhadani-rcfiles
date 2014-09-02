@@ -26,6 +26,14 @@ autocmd FileType *.yaml set tabstop=4|set shiftwidth=4|set expandtab
 " No annoying tilde backups
 set nobk
 
+" Highlight trailing space
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
 " Paste behavior
 set paste
 set pastetoggle=<F2>
