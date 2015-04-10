@@ -4,6 +4,13 @@
 "
 " Heavily borrowed from https://github.com/amix/vimrc
 "
+" Plugins used, install using Pathogen via 'git clone ...':
+"
+" ctrlp.vim
+" minibufexpl.vim
+" vim-coffee-script
+" vim-colors-solarized
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Initialize Pathogen plugin loader
