@@ -9,7 +9,7 @@
 " ctrlp.vim
 " minibufexpl.vim
 " vim-coffee-script
-" vim-colors-solarized
+" vim-colors-solarized  [For Mac/OSX, Recommended to instead install the Terminal color scheme and use it.]
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
