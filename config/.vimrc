@@ -285,6 +285,9 @@ autocmd BufWinLeave * call clearmatches()
 " Delete all trailing spaces with F5
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
+" Switch off the current search (remove highlights)
+nnoremap <silent> <Leader>/ :nohlsearch<CR>
+
 " Paste behavior
 set paste
 set pastetoggle=<F2>
