@@ -10,6 +10,8 @@
 " minibufexpl.vim
 " vim-coffee-script
 " vim-colors-solarized  [For Mac/OSX, Recommended to instead install the Terminal color scheme and use it.]
+" vim-flake8
+" jshint2.vim
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
