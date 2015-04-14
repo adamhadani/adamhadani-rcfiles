@@ -274,6 +274,17 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" disable arrow keys - GURU MODE
+"map <up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
+
 " Highlight trailing space
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -296,13 +307,9 @@ set pastetoggle=<F2>
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_custom_ignore = 'bower_components\|node_modules\|DS_Store\|git'
 
-" disable arrow keys - GURU MODE
-"map <up> <nop>
-"map <down> <nop>
-"map <left> <nop>
-"map <right> <nop>
-"imap <up> <nop>
-"imap <down> <nop>
-"imap <left> <nop>
-"imap <right> <nop>
+" jshint2.vm
+let jshint2_read = 1
+let jshint2_save = 1
 
+" vim-flake8
+autocmd BufWritePost *.py call Flake8()
