@@ -12,6 +12,7 @@
 " vim-colors-solarized  [For Mac/OSX, Recommended to instead install the Terminal color scheme and use it.]
 " vim-flake8
 " jshint2.vim
+" NERDTree
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -98,12 +99,10 @@ set tm=500
 " Enable syntax highlighting
 syntax enable
 
-colorscheme desert
 set background=dark
-" vim-colors-solarized (No need if using OSX Terminal Solarized profile apparently)
-"set background=dark
-"colorscheme solarized
-
+" Solarized stuff
+let g:solarized_termtrans = 1
+colorscheme solarized
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -315,3 +314,9 @@ let jshint2_save = 1
 
 " vim-flake8
 autocmd BufWritePost *.py call Flake8()
+
+" NERDTree
+nmap <Leader>t :NERDTreeToggle<CR>
+
+" CoffeeLint
+
