@@ -6,13 +6,14 @@
 "
 " Plugins used, install using Pathogen via 'git clone ...':
 "
-" ctrlp.vim
-" minibufexpl.vim
-" vim-coffee-script
+" ctrlp.vim - https://github.com/kien/ctrlp.vim
+" minibufexpl.vim - https://github.com/fholgado/minibufexpl.vim
+" vim-coffee-script - https://github.com/kchmck/vim-coffee-script
 " vim-colors-solarized  [For Mac/OSX, Recommended to instead install the Terminal color scheme and use it.]
-" vim-flake8
-" jshint2.vim
-" NERDTree
+" vim-flake8 - https://github.com/nvie/vim-flake8
+" jshint2.vim - https://github.com/Shutnik/jshint2.vim
+" NERDTree - https://github.com/scrooloose/nerdtree
+" spacehi - https://github.com/jpalardy/spacehi.vim
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -306,7 +307,7 @@ set pastetoggle=<F2>
 
 " ctrpl.vim
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_custom_ignore = 'bower_components\|node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'bower_components\|node_modules\|DS_Store\|git\|dist'
 
 " jshint2.vm
 let jshint2_read = 1
@@ -320,3 +321,5 @@ nmap <Leader>t :NERDTreeToggle<CR>
 
 " CoffeeLint
 
+" spacehi
+autocmd syntax * SpaceHi
