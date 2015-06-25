@@ -320,6 +320,7 @@ autocmd BufWritePost *.py call Flake8()
 nmap <Leader>t :NERDTreeToggle<CR>
 
 " CoffeeLint
+let coffee_linter = '/usr/local/bin/coffeelint'
 
 " spacehi
 autocmd syntax * SpaceHi
